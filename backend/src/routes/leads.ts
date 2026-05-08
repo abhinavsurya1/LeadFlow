@@ -7,7 +7,9 @@ export const leadsRouter = Router();
 
 leadsRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const leads = await leadsService.list();
+    const status = req.query.status as string;
+    const search = req.query.search as string;
+    const leads = await leadsService.list(status, search);
     res.json(leads);
   } catch (err) {
     next(err);

@@ -3,7 +3,10 @@ import { Prisma } from '@prisma/client';
 import { AppError } from '../utils/AppError';
 
 export const leadsService = {
-  async list() {
+  async list(status?: string, search?: string) {
+    const statusParam = status && status !== 'All' ? status : null;
+    const searchParam = search ? search : null;
+
     const leads = await prisma.$queryRaw`
       SELECT
         l.*,
@@ -17,6 +20,9 @@ export const leadsService = {
         ORDER BY created_at DESC
         LIMIT 1
       ) d ON true
+      WHERE
+        (${statusParam}::text IS NULL OR l.status::text = ${statusParam})
+        AND (${searchParam}::text IS NULL OR LOWER(l.name) LIKE LOWER('%' || ${searchParam} || '%'))
       ORDER BY
         CASE WHEN l.follow_up_at::date = CURRENT_DATE THEN 0 ELSE 1 END ASC,
         CASE WHEN l.follow_up_at::date = CURRENT_DATE THEN l.follow_up_at END ASC,
