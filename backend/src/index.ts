@@ -4,7 +4,7 @@ import morgan from 'morgan';
 import { errorHandler } from './middleware/errorHandler';
 
 // Route imports will be added in later commits
-// import { leadsRouter } from './routes/leads';
+import { leadsRouter } from './routes/leads';
 // import { discussionsRouter } from './routes/discussions';
 
 const app = express();
@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 // Route mounts will be added here
-// app.use('/api/leads', leadsRouter);
+app.use('/api/leads', leadsRouter);
 // app.use('/api/leads/:leadId/discussions', discussionsRouter);
 
 // Centralized error handler MUST be the last middleware
