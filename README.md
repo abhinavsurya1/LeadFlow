@@ -4,9 +4,15 @@ Lightweight single-screen CRM for sales workflows: one list, one detail workspac
 
 The workflow is intentionally designed around fast lead triage and follow-up management instead of multi-page navigation.
 
+**Repository:** [https://github.com/abhinavsurya1/LeadFlow](https://github.com/abhinavsurya1/LeadFlow)
+
 ## Screenshots
 
-When you add visuals: **one** clean main-workspace image is enough; optionally **one** timeline/detail shot. Skip wide galleries or marketing-style spreads.
+### Main workspace
+![LeadFlow main workspace](docs/assets/main-workspace.png)
+
+### Timeline view
+![LeadFlow timeline view](docs/assets/timeline%20view.png)
 
 ---
 
@@ -35,33 +41,39 @@ Rationale for each layer is in **[docs/ARCHITECTURE.md#2-tech-stack](docs/ARCHIT
 
 ---
 
+## Prerequisites
+
+Install these on your laptop before running:
+
+- **Git**
+- **Docker** (Docker Desktop on macOS/Windows, or Docker Engine + Compose plugin on Linux)
+- At least ~4 GB RAM available for Docker
+
 ## Quick start (Docker)
 
-You need **Git** and **Docker** (Compose v2). There is no Git remote until you add one—create an empty repo on GitHub (or elsewhere), then:
+### 1) Clone and start containers
 
 ```bash
-git remote add origin https://github.com/<you>/<repo>.git
-git push -u origin main
+git clone https://github.com/abhinavsurya1/LeadFlow.git
+cd LeadFlow
+docker compose up --build
 ```
 
-Clone and start the stack:
+### 2) Apply migration (first run on a fresh DB volume)
 
 ```bash
-git clone <repo> && cd LeadFlow
-docker compose up --build
+docker compose exec backend ./node_modules/.bin/prisma migrate deploy
+```
+
+### 3) Seed demo data (optional but recommended for review)
+
+```bash
+docker compose exec backend ./node_modules/.bin/prisma db seed
 ```
 
 - **Frontend:** http://localhost:5173  
 - **API:** http://localhost:5001  
-- **Postgres:** localhost:5432 (see `docker-compose.yml`)
-
-After the stack is up, run migrations and seed **once** (from `backend/`):
-
-```bash
-cd backend && npx prisma migrate dev && npx prisma db seed
-```
-
-This repository’s `docker-compose.yml` uses dev-style bind mounts and does **not** run Prisma migrate/seed automatically when the backend container starts—run the commands above after the first `up`.
+- **Postgres:** localhost:5432
 
 ---
 
