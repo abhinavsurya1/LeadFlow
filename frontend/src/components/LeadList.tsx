@@ -84,7 +84,7 @@ export function LeadList() {
       )}
 
       {otherLeads.length > 0 && (
-        <div className="relative bg-white">
+        <div className={`relative bg-white ${pinnedLeads.length > 0 ? 'border-t border-gray-100/75' : ''}`}>
           <div className="sticky top-0 z-10 border-b border-gray-100 bg-white/95 px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wider text-gray-500 shadow-[0_1px_0_rgba(15,23,42,0.03)] backdrop-blur-sm">
             All Leads
           </div>

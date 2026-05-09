@@ -38,7 +38,7 @@ export function LeadCard({ lead }: LeadCardProps) {
       }}
       onClick={() => setSelectedLeadId(lead.id)}
       className={cn(
-        'group cursor-pointer border-b border-gray-100/90 p-4 transition-[transform,box-shadow,background-color,border-color] duration-200 ease-out-soft',
+        'group cursor-pointer border-b border-gray-100/85 px-4 py-3.5 transition-[transform,box-shadow,background-color,border-color] duration-200 ease-out-soft',
         'hover:-translate-y-px hover:shadow-[0_2px_8px_-2px_rgba(15,23,42,0.06)]',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/30 focus-visible:ring-offset-2',
         isSelected
@@ -52,7 +52,7 @@ export function LeadCard({ lead }: LeadCardProps) {
     >
       <div className="mb-2 flex items-start justify-between gap-3">
         <div className="min-w-0 flex-1">
-          <h3 className="truncate text-sm font-semibold tracking-tight text-gray-900">{lead.name}</h3>
+          <h3 className="truncate text-[14px] font-semibold leading-snug tracking-tight text-gray-900">{lead.name}</h3>
           {lead.company && (
             <div className="mt-1 flex items-center text-xs text-gray-500">
               <Building2 className="mr-1 h-3 w-3 shrink-0 text-gray-400" />
@@ -82,8 +82,8 @@ export function LeadCard({ lead }: LeadCardProps) {
           {lead.followUpAt ? format(new Date(lead.followUpAt), 'MMM d, h:mm a') : 'No follow-up'}
         </div>
         {lead.phone && (
-          <div className="flex items-center text-gray-500">
-            <Phone className="w-3 h-3 mr-1" />
+          <div className="flex items-center tabular-nums text-gray-500">
+            <Phone className="mr-1 h-3 w-3 shrink-0 text-gray-400" />
             {lead.phone}
           </div>
         )}
