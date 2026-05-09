@@ -4,7 +4,6 @@ import { useLead } from '../hooks/useLeads';
 import { useDiscussions } from '../hooks/useDiscussions';
 import { format } from 'date-fns';
 import { Loader2, MessageSquare, Building2, Phone, Calendar } from 'lucide-react';
-import { StatusBadge } from './StatusBadge';
 import { StatusDropdown } from './StatusDropdown';
 import { AddDiscussionForm } from './AddDiscussionForm';
 import { EditLeadDialog } from './EditLeadDialog';
@@ -16,10 +15,44 @@ export function LeadDetail() {
 
   if (!selectedLeadId) {
     return (
-      <div className="flex-1 flex flex-col items-center justify-center bg-gray-50 text-gray-500 h-full">
-        <MessageSquare className="w-12 h-12 mb-4 text-gray-300" />
-        <p className="text-lg font-medium">No Lead Selected</p>
-        <p className="text-sm mt-1">Select a lead from the sidebar to view their timeline.</p>
+      <div className="relative flex h-full min-h-0 flex-1 flex-col bg-gradient-to-b from-gray-50 via-[#fafbfc] to-gray-100/60">
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.28] [background-image:radial-gradient(rgb(148_163_184/0.11)_1px,transparent_1px)] [background-size:20px_20px]"
+          aria-hidden
+        />
+        <div className="relative flex flex-1 flex-col items-center justify-center px-6 pb-[max(4.5rem,11vh)] pt-10">
+          <div className="w-full max-w-[22rem] rounded-xl border border-gray-200/70 bg-white px-8 py-10 shadow-[0_1px_2px_rgba(15,23,42,0.05)]">
+            <div className="flex flex-col items-center text-center">
+              <div
+                className="mb-6 flex h-[52px] w-[52px] items-center justify-center rounded-full border border-gray-200/80 bg-gray-50 text-gray-400"
+                aria-hidden
+              >
+                <MessageSquare className="h-[26px] w-[26px]" strokeWidth={1.15} />
+              </div>
+              <h2 className="text-[15px] font-semibold tracking-tight text-gray-800">
+                No Lead Selected
+              </h2>
+              <p className="mt-2.5 max-w-[280px] text-sm leading-relaxed text-gray-500">
+                Select a lead from the sidebar to view discussion history and manage follow-ups.
+              </p>
+              <div className="my-6 h-px w-full max-w-[240px] bg-gray-100" role="presentation" />
+              <ul className="w-full space-y-2.5 text-left text-[13px] leading-snug text-gray-400">
+                <li className="flex gap-2.5">
+                  <span className="mt-[0.35em] h-1 w-1 shrink-0 rounded-full bg-gray-300" aria-hidden />
+                  <span>Track conversations</span>
+                </li>
+                <li className="flex gap-2.5">
+                  <span className="mt-[0.35em] h-1 w-1 shrink-0 rounded-full bg-gray-300" aria-hidden />
+                  <span>Schedule follow-ups</span>
+                </li>
+                <li className="flex gap-2.5">
+                  <span className="mt-[0.35em] h-1 w-1 shrink-0 rounded-full bg-gray-300" aria-hidden />
+                  <span>Update lead statuses</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
