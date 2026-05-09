@@ -37,6 +37,15 @@ Rationale for each layer is in **[docs/ARCHITECTURE.md#2-tech-stack](docs/ARCHIT
 
 ## Quick start (Docker)
 
+You need **Git** and **Docker** (Compose v2). There is no Git remote until you add one—create an empty repo on GitHub (or elsewhere), then:
+
+```bash
+git remote add origin https://github.com/<you>/<repo>.git
+git push -u origin main
+```
+
+Clone and start the stack:
+
 ```bash
 git clone <repo> && cd LeadFlow
 docker compose up --build
@@ -87,7 +96,7 @@ Default dev URLs: frontend **http://localhost:5173**, API **http://localhost:500
 | `NODE_ENV` | `development` \| `production` | `development` | No |
 | `VITE_API_URL` | Base URL for the browser to call the API | `http://localhost:5001/api` | No (frontend) |
 
-Copy **`.env.example`** to **`.env`** in the repo root and/or configure `backend` / `frontend` as your setup requires.
+**Using `.env.example`:** Copy it to **`backend/.env`** for local runs (Prisma and Express read `DATABASE_URL` there). Optionally create **`frontend/.env`** with `VITE_API_URL` if you override the default. Real `.env` files stay **out of Git** (see `.gitignore`). Docker Compose injects the same variables into containers; you do not need a host `.env` file for Compose unless you extend it yourself.
 
 ---
 
