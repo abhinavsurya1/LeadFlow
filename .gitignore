@@ -1,6 +1,30 @@
+# Dependencies & build
 node_modules/
 dist/
+
+# Environment & secrets
 .env
+.env.local
+.env.*.local
+
+# Logs & caches
+*.log
+coverage/
+.cache/
+.turbo/
+*.tsbuildinfo
+
+# Avoid committing emitted copies alongside vite.config.ts
+frontend/vite.config.js
+frontend/vite.config.d.ts
+
+# OS / editor
+.DS_Store
+.vscode/
+
+# Database (local)
 pgdata/
+
+# Internal planning (local only — do not commit)
 Plan.md
 CommitPlan.md
