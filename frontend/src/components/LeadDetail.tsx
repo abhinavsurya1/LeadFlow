@@ -5,6 +5,7 @@ import { useDiscussions } from '../hooks/useDiscussions';
 import { format } from 'date-fns';
 import { Loader2, MessageSquare, Building2, Phone, Calendar } from 'lucide-react';
 import { StatusBadge } from './StatusBadge';
+import { AddDiscussionForm } from './AddDiscussionForm';
 
 export function LeadDetail() {
   const selectedLeadId = useStore((state) => state.selectedLeadId);
@@ -109,6 +110,9 @@ export function LeadDetail() {
           )}
         </div>
       </div>
+      
+      {/* Add Discussion Form */}
+      <AddDiscussionForm leadId={lead.id} />
     </div>
   );
 }
