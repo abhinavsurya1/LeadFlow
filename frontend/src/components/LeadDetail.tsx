@@ -5,6 +5,7 @@ import { useDiscussions } from '../hooks/useDiscussions';
 import { format } from 'date-fns';
 import { Loader2, MessageSquare, Building2, Phone, Calendar } from 'lucide-react';
 import { StatusBadge } from './StatusBadge';
+import { StatusDropdown } from './StatusDropdown';
 import { AddDiscussionForm } from './AddDiscussionForm';
 
 export function LeadDetail() {
@@ -65,7 +66,7 @@ export function LeadDetail() {
             </div>
           </div>
           <div className="flex flex-col items-end gap-3">
-            <StatusBadge status={lead.status} className="px-3 py-1 text-sm" />
+            <StatusDropdown leadId={lead.id} currentStatus={lead.status} />
           </div>
         </div>
       </div>
