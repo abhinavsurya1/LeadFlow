@@ -1,5 +1,5 @@
 import React from 'react';
-import { format, isPast, isToday } from 'date-fns';
+import { format, formatDistanceToNow, isPast, isToday } from 'date-fns';
 import { Clock, Building2, Phone } from 'lucide-react';
 import { Lead } from '../types';
 import { StatusBadge } from './StatusBadge';
@@ -46,8 +46,15 @@ export function LeadCard({ lead }: LeadCardProps) {
       </div>
 
       {lead.lastNote && (
-        <p className="text-xs text-gray-600 mt-2 line-clamp-2 italic">
-          "{lead.lastNote}"
+        <p className="text-xs text-gray-600 mt-2 line-clamp-2">
+          <span className="text-gray-500 not-italic">Last note: </span>
+          <span className="italic">&quot;{lead.lastNote}&quot;</span>
+          {lead.lastNoteAt && (
+            <span className="text-gray-400 not-italic">
+              {' '}
+              {formatDistanceToNow(new Date(lead.lastNoteAt), { addSuffix: true })}
+            </span>
+          )}
         </p>
       )}
 

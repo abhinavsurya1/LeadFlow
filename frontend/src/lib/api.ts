@@ -11,8 +11,13 @@ export const leadsApi = {
     if (status && status !== 'All') params.append('status', status);
     if (search) params.append('search', search);
     
-    const { data } = await api.get<Lead[]>(`/leads?${params.toString()}`);
-    return data;
+    const { data } = await api.get(`/leads?${params.toString()}`);
+    return (data as Record<string, unknown>[]).map((row) => ({
+      ...row,
+      followUpAt: row.followUpAt ?? row.follow_up_at ?? null,
+      createdAt: row.createdAt ?? row.created_at,
+      updatedAt: row.updatedAt ?? row.updated_at,
+    })) as Lead[];
   },
   
   getById: async (id: string) => {

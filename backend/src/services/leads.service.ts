@@ -9,7 +9,14 @@ export const leadsService = {
 
     const leads = await prisma.$queryRaw`
       SELECT
-        l.*,
+        l.id,
+        l.name,
+        l.company,
+        l.phone,
+        l.status,
+        l.follow_up_at AS "followUpAt",
+        l.created_at AS "createdAt",
+        l.updated_at AS "updatedAt",
         d.note AS "lastNote",
         d.created_at AS "lastNoteAt"
       FROM leads l

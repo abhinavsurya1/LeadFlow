@@ -4,7 +4,7 @@ import { useStore } from '../store/useStore';
 import { useDebounce } from '../hooks/useDebounce';
 import { LeadCard } from './LeadCard';
 import { Loader2 } from 'lucide-react';
-import { isToday, isPast } from 'date-fns';
+import { isToday } from 'date-fns';
 import { Lead } from '../types';
 
 export function LeadList() {
@@ -39,23 +39,21 @@ export function LeadList() {
     );
   }
 
-  const activeStatuses = ['New', 'Contacted', 'Qualified'];
-  
-  const isPinned = (lead: Lead) => {
-    if (!activeStatuses.includes(lead.status) || !lead.followUpAt) return false;
-    const date = new Date(lead.followUpAt);
-    return isToday(date) || isPast(date);
+  const isTodaysFollowUp = (lead: Lead) => {
+    if (!lead.followUpAt) return false;
+    return isToday(new Date(lead.followUpAt));
   };
 
-  const pinnedLeads = leads.filter(isPinned);
-  const otherLeads = leads.filter((l) => !isPinned(l));
+  const pinnedLeads = leads.filter(isTodaysFollowUp);
+  const pinnedIds = new Set(pinnedLeads.map((l) => l.id));
+  const otherLeads = leads.filter((l) => !pinnedIds.has(l.id));
 
   return (
     <div className="flex-1 overflow-y-auto divide-y divide-gray-100">
       {pinnedLeads.length > 0 && (
         <div className="bg-gray-50/80 relative">
           <div className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider sticky top-0 bg-gray-50 z-10 shadow-sm">
-            Action Required
+            📌 Today&apos;s Follow-ups
           </div>
           {pinnedLeads.map((lead) => (
             <LeadCard key={lead.id} lead={lead} />
@@ -66,7 +64,7 @@ export function LeadList() {
       {otherLeads.length > 0 && (
         <div className="bg-white relative">
           <div className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider sticky top-0 bg-white z-10 shadow-sm border-b border-gray-100">
-            {pinnedLeads.length > 0 ? 'Other Leads' : 'All Leads'}
+            All Leads
           </div>
           {otherLeads.map((lead) => (
             <LeadCard key={lead.id} lead={lead} />
