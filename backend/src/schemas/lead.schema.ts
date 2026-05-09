@@ -20,6 +20,9 @@ export const createLeadSchema = z.object({
 
 export const updateLeadSchema = z.object({
   body: z.object({
+    name: z.string().min(2, 'Name must be at least 2 characters').optional(),
+    company: z.string().optional().nullable(),
+    phone: z.string().optional().nullable(),
     status: leadStatusEnum.optional(),
     followUpAt: z.string().datetime().optional().nullable(),
   }),
