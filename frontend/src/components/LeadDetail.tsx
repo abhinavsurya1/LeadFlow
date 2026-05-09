@@ -7,6 +7,7 @@ import { Loader2, MessageSquare, Building2, Phone, Calendar } from 'lucide-react
 import { StatusBadge } from './StatusBadge';
 import { StatusDropdown } from './StatusDropdown';
 import { AddDiscussionForm } from './AddDiscussionForm';
+import { EditLeadDialog } from './EditLeadDialog';
 
 export function LeadDetail() {
   const selectedLeadId = useStore((state) => state.selectedLeadId);
@@ -45,7 +46,10 @@ export function LeadDetail() {
       <div className="p-6 border-b border-gray-100 bg-white shadow-sm z-10 relative">
         <div className="flex justify-between items-start">
           <div>
-            <h2 className="text-2xl font-bold text-gray-900">{lead.name}</h2>
+            <div className="flex items-center">
+              <h2 className="text-2xl font-bold text-gray-900">{lead.name}</h2>
+              <EditLeadDialog lead={lead} />
+            </div>
             <div className="flex flex-wrap items-center gap-4 mt-3 text-sm text-gray-600">
               {lead.company && (
                 <div className="flex items-center">
