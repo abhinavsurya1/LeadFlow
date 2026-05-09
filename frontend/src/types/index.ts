@@ -29,6 +29,9 @@ export interface CreateLeadDto {
 }
 
 export interface UpdateLeadDto {
+  name?: string;
+  company?: string | null;
+  phone?: string | null;
   status?: LeadStatus;
   followUpAt?: string | null;
 }

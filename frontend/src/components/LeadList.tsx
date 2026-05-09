@@ -1,11 +1,26 @@
-import React from 'react';
 import { useLeads } from '../hooks/useLeads';
 import { useStore } from '../store/useStore';
 import { useDebounce } from '../hooks/useDebounce';
 import { LeadCard } from './LeadCard';
-import { Loader2 } from 'lucide-react';
 import { isToday } from 'date-fns';
 import { Lead } from '../types';
+
+function LeadRowSkeleton() {
+  return (
+    <div className="animate-pulse border-b border-gray-100/80 p-4">
+      <div className="mb-2 flex justify-between gap-3">
+        <div className="h-4 w-[45%] max-w-[140px] rounded-md bg-gray-200/90" />
+        <div className="h-5 w-16 shrink-0 rounded-full bg-gray-200/80" />
+      </div>
+      <div className="mt-2 h-3 w-full rounded bg-gray-100" />
+      <div className="mt-1.5 h-3 w-4/5 rounded bg-gray-100/90" />
+      <div className="mt-3 flex justify-between">
+        <div className="h-3 w-24 rounded bg-gray-100" />
+        <div className="h-3 w-16 rounded bg-gray-100/80" />
+      </div>
+    </div>
+  );
+}
 
 export function LeadList() {
   const searchQuery = useStore((state) => state.searchQuery);
@@ -16,25 +31,32 @@ export function LeadList() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-64 text-gray-500">
-        <Loader2 className="w-6 h-6 animate-spin mr-2" />
-        Loading leads...
+      <div className="flex-1 overflow-hidden bg-white">
+        <div className="border-b border-gray-100 bg-gray-50/90 px-4 py-2">
+          <div className="h-3 w-28 animate-pulse rounded bg-gray-200/80" />
+        </div>
+        <LeadRowSkeleton />
+        <LeadRowSkeleton />
+        <LeadRowSkeleton />
+        <LeadRowSkeleton />
+        <LeadRowSkeleton />
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="p-4 text-red-500 text-center bg-red-50 m-4 rounded-md">
-        Failed to load leads. Please ensure the backend is running.
+      <div className="mx-3 mt-3 rounded-lg border border-red-100 bg-red-50/80 px-4 py-3 text-center text-sm text-red-700 shadow-sm">
+        Couldn&apos;t load leads. Check that the backend is running.
       </div>
     );
   }
 
   if (!leads || leads.length === 0) {
     return (
-      <div className="p-8 text-center text-gray-500">
-        No leads found matching your criteria.
+      <div className="px-6 py-10 text-center">
+        <p className="text-sm font-medium text-gray-600">No leads match your filters.</p>
+        <p className="mt-1 text-xs text-gray-400">Try adjusting search or status.</p>
       </div>
     );
   }
@@ -49,10 +71,10 @@ export function LeadList() {
   const otherLeads = leads.filter((l) => !pinnedIds.has(l.id));
 
   return (
-    <div className="flex-1 overflow-y-auto divide-y divide-gray-100">
+    <div className="flex-1 divide-y divide-gray-100/90 overflow-y-auto overscroll-contain bg-white">
       {pinnedLeads.length > 0 && (
-        <div className="bg-gray-50/80 relative">
-          <div className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider sticky top-0 bg-gray-50 z-10 shadow-sm">
+        <div className="relative bg-[#f9fafb]">
+          <div className="sticky top-0 z-10 border-b border-gray-200/60 bg-[#f9fafb]/95 px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wider text-gray-500 shadow-[0_1px_0_rgba(15,23,42,0.04)] backdrop-blur-sm">
             📌 Today&apos;s Follow-ups
           </div>
           {pinnedLeads.map((lead) => (
@@ -62,8 +84,8 @@ export function LeadList() {
       )}
 
       {otherLeads.length > 0 && (
-        <div className="bg-white relative">
-          <div className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider sticky top-0 bg-white z-10 shadow-sm border-b border-gray-100">
+        <div className="relative bg-white">
+          <div className="sticky top-0 z-10 border-b border-gray-100 bg-white/95 px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wider text-gray-500 shadow-[0_1px_0_rgba(15,23,42,0.03)] backdrop-blur-sm">
             All Leads
           </div>
           {otherLeads.map((lead) => (

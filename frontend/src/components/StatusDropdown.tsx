@@ -1,4 +1,3 @@
-import React from 'react';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { useUpdateLead } from '../hooks/useLeads';
 import { LeadStatus } from '../types';
@@ -16,15 +15,16 @@ export function StatusDropdown({ leadId, currentStatus }: StatusDropdownProps) {
 
   return (
     <DropdownMenu.Root>
-      <DropdownMenu.Trigger className="focus:outline-none flex items-center group">
-        <StatusBadge status={currentStatus} className="cursor-pointer group-hover:ring-2 ring-blue-200 px-3 py-1 text-sm" />
-        <ChevronDown className="w-4 h-4 ml-1 text-gray-400 group-hover:text-gray-600" />
+      <DropdownMenu.Trigger className="group flex items-center rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/25">
+        <StatusBadge status={currentStatus} className="cursor-pointer px-3 py-1 text-sm transition-[box-shadow,transform] duration-150 ease-out-soft group-hover:shadow-sm group-active:scale-[0.99]" />
+        <ChevronDown className="ml-1 h-4 w-4 text-gray-400 transition-colors duration-150 group-hover:text-gray-600" />
       </DropdownMenu.Trigger>
 
       <DropdownMenu.Portal>
         <DropdownMenu.Content
           align="end"
-          className="bg-white rounded-md shadow-lg border border-gray-200 p-1 min-w-[140px] z-50 animate-in fade-in zoom-in duration-150"
+          sideOffset={6}
+          className="z-50 min-w-[160px] rounded-lg border border-gray-200/90 bg-white p-1 shadow-[0_8px_30px_-8px_rgba(15,23,42,0.12),0_4px_12px_-4px_rgba(15,23,42,0.08)] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-1 duration-150 ease-out-soft"
         >
           {statuses.map((status) => (
             <DropdownMenu.Item
@@ -34,8 +34,8 @@ export function StatusDropdown({ leadId, currentStatus }: StatusDropdownProps) {
                   updateLead.mutate({ id: leadId, data: { status } });
                 }
               }}
-              className={`px-3 py-2 text-sm rounded-sm cursor-pointer outline-none transition-colors
-                ${status === currentStatus ? 'bg-blue-50 font-medium text-blue-700' : 'text-gray-700 hover:bg-gray-100'}`}
+              className={`cursor-pointer rounded-md px-3 py-2 text-sm outline-none transition-colors duration-150 ease-out-soft
+                ${status === currentStatus ? 'bg-blue-50 font-medium text-blue-800' : 'text-gray-700 hover:bg-gray-50'}`}
             >
               {status.replace(/([A-Z])/g, ' $1').trim()}
             </DropdownMenu.Item>

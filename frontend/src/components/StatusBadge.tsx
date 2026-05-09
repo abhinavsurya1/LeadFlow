@@ -1,4 +1,3 @@
-import React from 'react';
 import { LeadStatus } from '../types';
 import { cn } from '../lib/utils';
 
@@ -20,7 +19,7 @@ export function StatusBadge({ status, className }: StatusBadgeProps) {
   return (
     <span
       className={cn(
-        'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border',
+        'inline-flex items-center rounded-full border px-2.5 py-0.5 text-[11px] font-semibold tracking-tight transition-colors duration-150 ease-out-soft',
         styles[status],
         className
       )}
