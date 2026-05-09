@@ -1,6 +1,7 @@
 import React from 'react';
 import { Search } from 'lucide-react';
 import { useStore } from '../store/useStore';
+import { useDebounce } from '../hooks/useDebounce';
 import { LeadStatus } from '../types';
 
 export function SidebarHeader() {

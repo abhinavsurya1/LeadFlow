@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLeads } from '../hooks/useLeads';
 import { useStore } from '../store/useStore';
+import { useDebounce } from '../hooks/useDebounce';
 import { LeadCard } from './LeadCard';
 import { Loader2 } from 'lucide-react';
 import { isToday, isPast } from 'date-fns';
@@ -9,8 +10,9 @@ import { Lead } from '../types';
 export function LeadList() {
   const searchQuery = useStore((state) => state.searchQuery);
   const statusFilter = useStore((state) => state.statusFilter);
+  const debouncedSearch = useDebounce(searchQuery, 300);
   
-  const { data: leads, isLoading, error } = useLeads(statusFilter, searchQuery);
+  const { data: leads, isLoading, error } = useLeads(statusFilter, debouncedSearch);
 
   if (isLoading) {
     return (
